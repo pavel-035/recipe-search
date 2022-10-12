@@ -35,10 +35,6 @@ Vue.component('recipe-card', {
       //   const options = {
       //     method: 'GET',
       //     url: `https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/${id}/information`,
-      //     headers: {
-      //       'X-RapidAPI-Key': '69666ef9eamsh37272f98b695c9bp197b13jsn089b9fad20a7',
-      //       'X-RapidAPI-Host': 'spoonacular-recipe-food-nutrition-v1.p.rapidapi.com'
-      //     }
       //   };
       //
       //   try {
@@ -188,10 +184,6 @@ const app = new Vue({
       //   params: {
       //     query: this.filters.query.value || 'pasta'
       //   },
-      //   headers: {
-      //     'X-RapidAPI-Key': '69666ef9eamsh37272f98b695c9bp197b13jsn089b9fad20a7',
-      //     'X-RapidAPI-Host': 'spoonacular-recipe-food-nutrition-v1.p.rapidapi.com'
-      //   }
       // };
       //
       // try {
