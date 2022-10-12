@@ -40,10 +40,6 @@
     font-size: 26px;
     line-height: 30px;
   }
-  @media screen and (max-width: $bp3) {
-    font-size: 20px;
-    line-height: 23px;
-  }
 }
 
 @mixin d_p1 {
@@ -73,7 +69,7 @@
   }
   @media screen and (max-width: $bp3) {
     font-size: 14px;
-    line-height: 18px;
+    line-height: 28px;
   }
 }
 @mixin d_p3 {

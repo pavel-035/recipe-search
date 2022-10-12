@@ -30,9 +30,12 @@
       <section class="handbook">
         <div class="handbook_box ui-box">
           <div class="handbook_cards">
+            <div v-if="!recipesData" style="text-align: center">
+              Recipes is not found!
+            </div>
             <recipe-card
-              v-for="(item, index) in recipesData"
-              :key="index"
+              v-for="item in recipesData"
+              :key="item.id"
 
               :data="item"
             ></recipe-card>
@@ -46,8 +49,12 @@
                 type="text"
                 class="search_input"
                 placeholder="pasta"
+                v-model="filters.query.value"
               >
-              <button class="search_button button">
+              <button
+                class="search_button button"
+                @click="searchRecipes()"
+              >
                 Search
               </button>
             </div>

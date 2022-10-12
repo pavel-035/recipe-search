@@ -61,10 +61,10 @@ p {
     line-height: 22px;
   }
 }
-@media screen and (max-width: 440px) {
+@media screen and (max-width: 540px) {
   .button {
     font-size: 14px;
-    line-height: 18px;
+    line-height: 28px;
   }
 }
 
@@ -119,7 +119,7 @@ p {
     line-height: 46px;
   }
 }
-@media screen and (max-width: 440px) {
+@media screen and (max-width: 540px) {
   .header_title h1 {
     font-size: 28px;
     line-height: 33px;
@@ -139,7 +139,7 @@ p {
     line-height: 25px;
   }
 }
-@media screen and (max-width: 440px) {
+@media screen and (max-width: 540px) {
   .header_description {
     font-size: 18px;
     line-height: 23px;
@@ -158,10 +158,24 @@ p {
   column-gap: 30px;
 }
 .handbook_cards {
+  display: flex;
+  justify-content: space-between;
+  column-gap: 30px;
+  row-gap: 30px;
+  flex-wrap: wrap;
   width: 100%;
 }
 .handbook_card {
-  margin-bottom: 30px;
+  width: calc(50% - 15px);
+}
+.handbook_card .v-dialog {
+  background: #ffffff;
+}
+.handbook_card .v-dialog__container {
+  display: block;
+}
+.handbook_card .v-dialog__content {
+  background: rgba(0, 0, 0, 0.5);
 }
 .handbook_sidebar {
   max-width: 320px;
@@ -171,6 +185,21 @@ p {
   margin-top: 15px;
 }
 
+.card_recipe {
+  position: relative;
+  padding: 15px;
+  box-sizing: border-box;
+}
+.card_close {
+  position: absolute;
+  top: 22px;
+  right: 14px;
+  width: 20px;
+  font-size: 0px;
+}
+.card_close img {
+  width: 100%;
+}
 .card_title {
   display: inline-block;
   position: relative;
@@ -187,12 +216,6 @@ p {
     line-height: 30px;
   }
 }
-@media screen and (max-width: 440px) {
-  .card_title {
-    font-size: 20px;
-    line-height: 23px;
-  }
-}
 .card_title:after {
   content: "";
   background: #3fa4f6;
@@ -205,6 +228,7 @@ p {
 }
 .card_image {
   width: 100%;
+  margin: 15px 0;
 }
 .card_data {
   display: flex;
@@ -215,7 +239,7 @@ p {
   max-width: 370px;
   min-width: 255px;
   width: 100%;
-  margin-right: 15px;
+  margin-left: 15px;
 }
 .card_details {
   list-style: none;
@@ -238,7 +262,7 @@ p {
     line-height: 25px;
   }
 }
-@media screen and (max-width: 440px) {
+@media screen and (max-width: 540px) {
   .card_item {
     font-size: 18px;
     line-height: 23px;
@@ -270,10 +294,10 @@ p {
     line-height: 22px;
   }
 }
-@media screen and (max-width: 440px) {
+@media screen and (max-width: 540px) {
   .card_summery {
     font-size: 14px;
-    line-height: 18px;
+    line-height: 28px;
   }
 }
 .card_summery a {
@@ -297,12 +321,6 @@ p {
     line-height: 30px;
   }
 }
-@media screen and (max-width: 440px) {
-  .card_heading {
-    font-size: 20px;
-    line-height: 23px;
-  }
-}
 .card_instructions {
   font-family: Roboto-Regular;
   font-style: normal;
@@ -318,10 +336,10 @@ p {
     line-height: 22px;
   }
 }
-@media screen and (max-width: 440px) {
+@media screen and (max-width: 540px) {
   .card_instructions {
     font-size: 14px;
-    line-height: 18px;
+    line-height: 28px;
   }
 }
 
@@ -353,12 +371,6 @@ p {
     line-height: 30px;
   }
 }
-@media screen and (max-width: 440px) {
-  .search_title {
-    font-size: 20px;
-    line-height: 23px;
-  }
-}
 .search_input {
   width: 100%;
   padding: 15px;
@@ -378,10 +390,10 @@ p {
     line-height: 22px;
   }
 }
-@media screen and (max-width: 440px) {
+@media screen and (max-width: 540px) {
   .search_input {
     font-size: 14px;
-    line-height: 18px;
+    line-height: 28px;
   }
 }
 .search_input:focus-visible {
@@ -421,13 +433,28 @@ p {
     min-width: 285px;
   }
 }
-@media screen and (max-width: 880px) {
+@media screen and (max-width: 540px) {
+  .handbook_filter {
+    width: 100%;
+  }
+  .handbook_cards {
+    flex-direction: column;
+    column-gap: 15px;
+    row-gap: 15px;
+  }
+  .handbook_card {
+    width: 100%;
+  }
   .card_data {
+    margin: 0;
     flex-direction: column;
   }
   .card_info {
+    margin-left: 0;
     max-width: inherit;
-    margin: 0;
+  }
+  .card_details {
+    margin-top: 0;
   }
 }
 @media screen and (max-width: 380px) {

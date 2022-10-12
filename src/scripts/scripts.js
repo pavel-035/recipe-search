@@ -1,7 +1,8 @@
 Vue.component('recipe-card', {
   data() {
     return {
-      isShow: false
+      isShowRecipe: false,
+      recipesInfo: []
     }
   },
   props: {
@@ -10,77 +11,120 @@ Vue.component('recipe-card', {
       required: true
     }
   },
+  methods: {
+    async getRecipeInfo(id) {
+      this.isShowRecipe = !this.isShowRecipe
+      this.$set(this.recipesInfo, id, {
+        title: 'Char-Grilled Beef Tenderloin with Three-Herb Chimichurri',
+        image: 'https://spoonacular.com/recipeImages/char-grilled-beef-tenderloin-with-three-herb-chimichurri-156992.jpg',
+        readyInMinutes: 45,
+        aggregateLikes:0,
+        extendedIngredients: [
+          {
+            id: 1022009,
+            original:"1 1/2 teaspoons chipotle chile powder or ancho chile powder"
+          },
+          {
+            id:13926,
+            original:"1 3 1/2-pound beef tenderloin"
+          }
+        ],
+        instructions: 'PreparationFor spice rub: Combine all ingredients in small bowl. Do ahead: Can be made 2 days ahead. Store airtight at room temperature. For chimichurri sauce: Combine first 8 ingredients in blender; blend until almost smooth. Add 1/4 of parsley, 1/4 of cilantro, and 1/4 of mint; blend until incorporated. Add remaining herbs in 3 more additions, pureeing until almost smooth after each addition. Do ahead: Can be made 3 hours ahead. Cover; chill. For beef tenderloin: Let beef stand at room temperature 1 hour. Prepare barbecue (high heat). Pat beef dry with paper towels; brush with oil. Sprinkle all over with spice rub, using all of mixture (coating will be thick). Place beef on grill; sear 2 minutes on each side. Reduce heat to medium-high. Grill uncovered until instant-read thermometer inserted into thickest part of beef registers 130F for medium-rare, moving beef to cooler part of grill as needed to prevent burning, and turning occasionally, about 40 minutes. Transfer to platter; cover loosely with foil and let rest 15 minutes. Thinly slice beef crosswise. Serve with chimichurri sauce. *Available at specialty foods stores and from tienda.com.'
+      });
+      // if(!this.isShowRecipe) {
+      //   const options = {
+      //     method: 'GET',
+      //     url: `https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/${id}/information`,
+      //     headers: {
+      //       'X-RapidAPI-Key': '69666ef9eamsh37272f98b695c9bp197b13jsn089b9fad20a7',
+      //       'X-RapidAPI-Host': 'spoonacular-recipe-food-nutrition-v1.p.rapidapi.com'
+      //     }
+      //   };
+      //
+      //   try {
+      //     const { data } = await axios.request(options);
+      //     console.log(data);
+      //     this.$set(this.recipesInfo, id, data);
+      //     this.isShowRecipe = true
+      //   } catch (err) {
+      //     this.isShowRecipe = false
+      //     console.error(err);
+      //   }
+      // } else {
+      //   this.isShowRecipe = false
+      // }
+    }
+  },
   template: `
     <div class="handbook_card ui-card">
-      <span class="card_title">
-        On the Job: Pan Roasted Cauliflower From Food52
-      </span>
-      <div class="card_data">
-        <div class="card_info">
-          <div class="card_image img-box">
-            <img src="https://spoonacular.com/recipeImages/479101-556x370.jpg" alt="image">
-          </div>
-          <ul class="card_details">
-            <li class="card_item">
-              Preparation minutes: 10
-            </li>
-            <li class="card_item">
-              Cooking minutes: 10
-            </li>
-            <li class="card_item">
-              <div class="card_icon img-box">
-                <img src="./src/icons/like.svg" alt="like">
-              </div>
-              255
-            </li>
-          </ul>
-        </div>
-        <div class="card_summery">
-          <p>
-            On the Job: Pan Roasted Cauliflower From Food52 is a <b>dairy free</b> side dish. One portion of this dish contains roughly <b>7g of protein</b>, <b>26g of fat</b>, and a total of <b>350 calories</b>. This recipe serves 4. For <b>$1.99 per serving</b>, this recipe <b>covers 20%</b> of your daily requirements of vitamins and minerals. This recipe is liked by 225 foodies and cooks. A mixture of breadcrumbs, rosemary, sea salt, and a handful of other ingredients are all it takes to make this recipe so tasty. From preparation to the plate, this recipe takes around <b>20 minutes</b>. All things considered, we decided this recipe <b>deserves a spoonacular score of 97%</b>. This score is tremendous. Try <a href="https://spoonacular.com/recipes/food52s-roasted-broccoli-with-smoked-paprika-vinaigrette-and-marcona-almonds-110229">Food52's Roasted Broccoli with Smoked Paprika Vinaigrette and Marconan Almonds</a>, <a href="https://spoonacular.com/recipes/sheet-pan-chicken-cauliflower-921598">Sheet Pan Chicken Cauliflower</a>, and <a href="https://spoonacular.com/recipes/sheet-pan-roasted-broccoli-918006">Sheet Pan Roasted Broccoli</a> for similar recipes.
-          </p>
-        </div>
+      <h2 class="card_title">
+        {{ data.title }}
+      </h2>
+      <div class="card_image img-box">
+        <img :src="data.image" alt="image" />
       </div>
-
       <button
         class="card_more more-button button"
-        @click="isShow = !isShow"
+        @click="getRecipeInfo(data.id)"
       >
         Recipe
-        <div :class="['more-button_arrow', { 'more-button_arrow-open': isShow }]">
-          <img src="./src/icons/arrow.svg" alt="arrow">
-        </div>
       </button>
-
-      <div
-        v-if="isShow"
-        class="card_recipe"
+      
+      <v-dialog
+        v-if="isShowRecipe"
+        v-model="isShowRecipe"
+        max-width="620"
       >
-        <h2 class="card_heading">
-          Ingredients
-        </h2>
-        <ul class="card_details">
-          <li class="card_item">
-            1/2 cup fresh breadcrumbs (I used gluten-free!)
-          </li>
-          <li class="card_item">
-            1 head of cauliflower
-          </li>
-          <li class="card_item">
-            1 handful parsley, chopped
-          </li>
-          <li class="card_item">
-            2 teaspoons fresh rosemary, chopped
-          </li>
-        </ul>
-
-        <h2 class="card_heading">
-          Instructions
-        </h2>
-        <p class="card_instructions">
-          Cut the florets off the stems and then chop them into tiny florets. You can also chop up the stems into tiny pieces if you want. You should have about 6 cups of chopped cauliflower. In a large skillet heat 2 tablespoons of olive oil over medium-high heat. Add the cauliflower, 1 teaspoon of salt, rosemary, and sumac. Sauté until cauliflower is tender and starts to brown a bit, stirring as necessary, about 15 minutes. You can also add a bit of olive oil if the pan starts to get too dry or the cauliflower is starting to stick. Meanwhile, in a small skillet, toast the pinenuts over medium heat until golden brown. Set aside. Heat the remaining 2 tablespoons of olive oil in the same pan. Once oil is shimmering, toss in the breadcrumbs and stir, toasting the breadcrumbs. Season with a pinch of kosher salt and a few turns of freshly ground black pepper. Remove from the heat and toss in half of the chopped parsley. When cauliflower is done, remove from the heat and season to taste with freshly ground black pepper and a pinch or so of salt if necessary. Toss in the toasted pine nuts, the chopped raisins, and the remaining parsley. When ready to serve, sprinkle the top with the toasted breadcrumbs and some pecorino.
-        </p>
-      </div>
+        <div class="card_recipe">
+          <button
+            @click="isShowRecipe = false"
+            class="card_close"
+          >
+            <img src="./src/icons/close.svg" alt="close">
+          </button>
+          <h2 class="card_title">
+            {{ data.title }}
+          </h2>
+          <div class="card_data">
+            <div class="card_image img-box">
+              <img :src="recipesInfo[data.id].image" alt="image" />
+            </div>
+            <div class="card_info">
+              <ul class="card_details">
+                <li class="card_item">
+                  Ready in minutes: {{ recipesInfo[data.id].readyInMinutes }}
+                </li>
+                <li class="card_item">
+                  <div class="card_icon img-box">
+                    <img src="./src/icons/like.svg" alt="like">
+                  </div>
+                  {{ recipesInfo[data.id].aggregateLikes }}
+                </li>
+              </ul>
+            </div>
+          </div>
+          
+          <h2 class="card_heading">
+            Ingredients:
+          </h2>
+          <ul class="card_details">
+            <li
+              v-for="item in recipesInfo[data.id].extendedIngredients"
+              :key="item.id"
+              class="card_item"
+            >
+              {{ item.original }}
+            </li>
+          </ul>
+  
+          <h2 class="card_heading">
+            Instructions:
+          </h2>
+          <p class="card_instructions">
+            {{ recipesInfo[data.id].instructions }}  
+          </p>
+        </div>
+      </v-dialog>
     </div>
   `
 })
@@ -90,8 +134,24 @@ const app = new Vue({
   vuetify: new Vuetify(),
   data() {
     return {
-      recipesData: [{"name": "John", "age": 38}, {"name": "Mary", "age": 33}],
+      recipesData: [
+        {
+          id: 749013,
+          image: "https://spoonacular.com/recipeImages/749013-312x231.jpeg",
+          imageType: "jpeg",
+          title: "Pasta"
+        },
+        {
+          id: 749014,
+          image: "https://spoonacular.com/recipeImages/749013-312x231.jpeg",
+          imageType: "jpeg",
+          title: "Pasta"
+        }
+      ],
       filters: {
+        query: {
+          value: null
+        },
         cuisine: {
           value: null,
           options: ['african', 'mexican', 'japanese', 'korean', 'vietnamese', 'thai', 'indian', 'british', 'irish', 'french', 'italian', 'mexican', 'spanish', 'middle eastern', 'jewish', 'american', 'cajun', 'southern', 'greek', 'german', 'nordic', 'eastern european', 'caribbean', 'latin american']
@@ -116,8 +176,32 @@ const app = new Vue({
     this.getRecipesData();
   },
   methods: {
-    getRecipesData() {
+    searchRecipes() {
+      this.isShowFilters = false;
+      this.getRecipesData();
+    },
+    async getRecipesData() {
       console.log('getData');
+      // const options = {
+      //   method: 'GET',
+      //   url: 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/complexSearch',
+      //   params: {
+      //     query: this.filters.query.value || 'pasta'
+      //   },
+      //   headers: {
+      //     'X-RapidAPI-Key': '69666ef9eamsh37272f98b695c9bp197b13jsn089b9fad20a7',
+      //     'X-RapidAPI-Host': 'spoonacular-recipe-food-nutrition-v1.p.rapidapi.com'
+      //   }
+      // };
+      //
+      // try {
+      //   const { data } = await axios.request(options);
+      //
+      //   console.log(data);
+      //   this.recipesData = data.results;
+      // } catch (err) {
+      //   console.error(err);
+      // }
     }
   }
 })

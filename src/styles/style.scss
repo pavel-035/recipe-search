@@ -102,10 +102,24 @@ p {
     column-gap: 30px;
   }
   &_cards {
+    display: flex;
+    justify-content: space-between;
+    column-gap: 30px;
+    row-gap: 30px;
+    flex-wrap: wrap;
     width: 100%;
   }
   &_card {
-    margin-bottom: 30px;
+    width: calc(100% / 2 - 15px);
+    .v-dialog {
+      background: #ffffff;
+    }
+    .v-dialog__container {
+      display: block;
+    }
+    .v-dialog__content {
+      background: rgba(0, 0, 0, 0.5);
+    }
   }
   &_sidebar {
     max-width: 320px;
@@ -117,6 +131,21 @@ p {
 }
 
 .card {
+  &_recipe {
+    position: relative;
+    padding: 15px;
+    box-sizing: border-box;
+  }
+  &_close {
+    position: absolute;
+    top: 22px;
+    right: 14px;
+    width: 20px;
+    font-size: 0px;
+    img {
+      width: 100%;
+    }
+  }
   &_title {
     display: inline-block;
     position: relative;
@@ -138,6 +167,7 @@ p {
   }
   &_image {
     width: 100%;
+    margin: 15px 0;
   }
   &_data {
     display: flex;
@@ -148,7 +178,7 @@ p {
     max-width: 370px;
     min-width: 255px;
     width: 100%;
-    margin-right: 15px;
+    margin-left: 15px;
   }
   &_details {
     list-style: none;
@@ -273,14 +303,31 @@ p {
   }
 }
 
-@media screen and (max-width: $bp2) {
+@media screen and (max-width: $bp3) {
+  .handbook {
+    &_filter {
+      width: 100%;
+    }
+    &_cards {
+      flex-direction: column;
+      column-gap: 15px;
+      row-gap: 15px;
+    }
+    &_card {
+      width: 100%;
+    }
+  }
   .card {
     &_data {
+      margin: 0;
       flex-direction: column;
     }
     &_info {
+      margin-left: 0;
       max-width: inherit;
-      margin: 0;
+    }
+    &_details {
+      margin-top: 0;
     }
   }
 }
