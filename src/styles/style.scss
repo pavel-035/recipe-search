@@ -1,0 +1,294 @@
+@import 'variables.scss';
+@import 'fonts.scss';
+
+body {
+  margin: 0;
+  font-family: 'Roboto-Regular';
+}
+
+p {
+  margin: 0;
+}
+
+.wrapper {
+  background: #fff;
+  overflow: hidden;
+}
+
+.img-box {
+  font-size: 0;
+  img {
+    width: 100%;
+  }
+}
+
+.ui-box {
+  width: 95%;
+  margin: 0 auto;
+  padding: 40px 0;
+}
+
+.ui-card {
+  padding: 15px;
+  box-sizing: border-box;
+  border: 1px solid #c2c9d6;
+  border-radius: 2px;
+  box-shadow: 0px 15px 10px -15px #3fa4f6;
+}
+
+.button {
+  width: 100%;
+  padding: 15px 0;
+  box-sizing: border-box;
+  background: #3fa4f6;
+  border: none;
+  cursor: pointer;
+
+  @include d_p2;
+  color: #fff;
+}
+
+.more-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  &_icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 10px;
+    width: 15px;
+  }
+  &_arrow {
+    width: 25px;
+    margin: 1.5px 0 0 10px;
+    transform: rotate(0deg);
+    transition: 0.5s;
+    &-open {
+      transform: rotate(180deg);
+      transition: 0.5s;
+    }
+  }
+}
+
+.header {
+  border-bottom: 2px solid #3fa4f6;
+  &_title {
+    display: inline-block;
+
+    color: #000;
+    text-decoration: none;
+    h1 {
+      @include d_h1;
+      margin: 0;
+    }
+  }
+  &_description {
+    @include d_p1;
+    margin: 0;
+  }
+}
+
+.main {
+  border-top: 2px solid #3fa4f6;
+  border-bottom: 2px solid #3fa4f6;
+  margin: 2px 0;
+}
+
+.handbook {
+  &_box {
+    display: flex;
+    justify-content: space-between;
+    column-gap: 30px;
+  }
+  &_cards {
+    width: 100%;
+  }
+  &_card {
+    margin-bottom: 30px;
+  }
+  &_sidebar {
+    max-width: 320px;
+    width: 100%;
+  }
+  &_filters {
+    margin-top: 15px;
+  }
+}
+
+.card {
+  &_title {
+    display: inline-block;
+    position: relative;
+    margin-bottom: 10px;
+    @include d_h2;
+
+    &:after {
+      content: "";
+      background: #3fa4f6;
+
+      width: 60%;
+      height: 2px;
+      border-radius: 4px;
+
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+    }
+  }
+  &_image {
+    width: 100%;
+  }
+  &_data {
+    display: flex;
+    align-items: flex-start;
+    margin: 15px 0 15px;
+  }
+  &_info {
+    max-width: 370px;
+    min-width: 255px;
+    width: 100%;
+    margin-right: 15px;
+  }
+  &_details {
+    list-style: none;
+    padding-left: 0;
+    margin: 25px 0 0;
+  }
+  &_item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+
+    @include d_p1;
+  }
+  &_icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 22px;
+    margin-right: 10px;
+  }
+  &_summery {
+    position: relative;
+    max-width: 1000px;
+    min-width: 250px;
+    width: 100%;
+    max-height: 286px;
+    overflow: hidden;
+
+    @include d_p2;
+    a {
+      color: #000;
+      cursor: pointer;
+      &:hover {
+        color: #3fa4f6;
+      }
+    }
+  }
+
+  &_heading {
+    @include d_h2;
+    margin: 40px 0 15px;
+  }
+  &_instructions {
+    @include d_p2;
+    max-width: 1000px;
+    width: 100%;
+  }
+}
+
+.search {
+  position: relative;
+  width: 100%;
+  min-width: 255px;
+  padding: 70px 15px 15px;
+  box-sizing: border-box;
+  &_title {
+    position: absolute;
+    top: -13px;
+    right: 50%;
+    transform: translateX(50%);
+
+    background: #fff;
+    padding: 0 15px;
+    margin: 0;
+
+    @include d_h2;
+    text-align: center;
+  }
+  &_input {
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid #c2c9d6;
+    border-radius: 2px;
+    box-sizing: border-box;
+
+    @include d_p2;
+    &:focus-visible {
+      outline: none;
+    }
+  }
+}
+
+.filters {
+  .v-text-field .v-label {
+    top: 0;
+  }
+}
+
+@media screen and (max-width: $bp1) {
+  .handbook {
+    &_box {
+      flex-direction: column-reverse;
+      column-gap: 15px;
+    }
+    &_sidebar {
+      max-width: inherit;
+      margin-bottom: 15px;
+    }
+    &_filters {
+      display: flex;
+      flex-wrap: wrap;
+      column-gap: 15px;
+      row-gap: 15px;
+      margin-top: 15px;
+    }
+    &_filter {
+      width: calc(100% / 2 - 15px);
+    }
+  }
+  .search {
+    padding: 30px 15px 15px;
+  }
+  .card {
+    &_info {
+      min-width: 225px;
+    }
+    &_summery {
+      min-width: 285px;
+    }
+  }
+}
+
+@media screen and (max-width: $bp2) {
+  .card {
+    &_data {
+      flex-direction: column;
+    }
+    &_info {
+      max-width: inherit;
+      margin: 0;
+    }
+  }
+}
+
+@media screen and (max-width: $bp4) {
+  .handbook {
+    &_filter {
+      width: 100%;
+    }
+  }
+}
