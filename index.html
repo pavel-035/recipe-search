@@ -5,124 +5,153 @@
   <meta name="viewport"
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
   <title></title>
+
+  <link rel="stylesheet" href="./src/styles/main.css">
+</head>
+<body>
+  <div class="wrapper" id="app">
+    <div
+      v-if="isShowMainLoader"
+      class="main-loader"
+    >
+      <v-progress-circular
+        :size="50"
+        color="primary"
+        indeterminate
+      ></v-progress-circular>
+    </div>
+    <template v-else>
+      <header class="header">
+        <div class="header_box ui-box">
+          <a href="#" class="header_title">
+            <h1>
+              Medical book
+            </h1>
+          </a>
+          <h2 class="header_description">
+            search for nearby treatment centers
+          </h2>
+        </div>
+      </header>
+      <main class="main">
+        <section class="handbook">
+          <div class="handbook_box ui-box">
+            <div class="handbook_cards">
+              <div
+                v-if="isShowDataLoader"
+                class="data-loader"
+              >
+                <v-progress-circular
+                  :size="30"
+                  color="primary"
+                  indeterminate
+                ></v-progress-circular>
+              </div>
+              <div v-if="!recipesData && !isShowDataLoader" style="text-align: center">
+                Recipes is not found!
+              </div>
+              <recipe-card
+                v-if="recipesData && !isShowDataLoader"
+                v-for="item in recipesData"
+                :key="item.id"
+
+                :data="item"
+              ></recipe-card>
+            </div>
+            <div class="handbook_sidebar">
+              <div class="handbook_search search ui-card">
+                <h2 class="search_title">
+                  search
+                </h2>
+                <input
+                        type="text"
+                        class="search_input"
+                        placeholder="pasta"
+                        v-model="filters.query.value"
+                >
+                <button
+                        class="search_button button"
+                        @click="searchRecipes()"
+                >
+                  Search
+                </button>
+              </div>
+
+              <div class="handbook_filters filters ui-card">
+                <button
+                        class="filters_more more-button button"
+                        @click="isShowFilters = !isShowFilters"
+                >
+                  <div class="filters_icon more-button_icon">
+                    <img src="./src/icons/settings.svg" alt="filters">
+                  </div>
+                  filter
+                  <div :class="['more-button_arrow', { 'more-button_arrow-open': isShowFilters }]">
+                    <img src="./src/icons/arrow.svg" alt="arrow">
+                  </div>
+                </button>
+                <template v-if="isShowFilters">
+                  <v-select
+                          class="handbook_filter"
+                          v-model="filters.cuisine.value"
+                          :items="filters.cuisine.options"
+                          label="Cuisine"
+                          attach
+                          chips
+                          multiple
+                          color="#42A5F5"
+                  ></v-select>
+                  <v-select
+                          class="handbook_filter"
+                          v-model="filters.excludeCuisine.value"
+                          :items="filters.excludeCuisine.options"
+                          label="Exclude cuisine"
+                          attach
+                          chips
+                          multiple
+                          color="#42A5F5"
+                  ></v-select>
+                  <v-select
+                          class="handbook_filter"
+                          v-model="filters.diet.value"
+                          :items="filters.diet.options"
+                          label="Diet"
+                          attach
+                          chips
+                          multiple
+                          color="#42A5F5"
+                  ></v-select>
+                  <v-select
+                          class="handbook_filter"
+                          v-model="filters.intolerances.value"
+                          :items="filters.intolerances.options"
+                          label="Intolerances"
+                          attach
+                          chips
+                          multiple
+                          color="#42A5F5"
+                  ></v-select>
+                </template>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </template>
+  </div>
 
   <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/@mdi/font@6.x/css/materialdesignicons.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
   <link rel="stylesheet" href="./src/styles/style.css">
-</head>
-<body>
-  <div class="wrapper" id="app">
-    <header class="header">
-      <div class="header_box ui-box">
-        <a href="#" class="header_title">
-          <h1>
-            Medical book
-          </h1>
-        </a>
-        <h2 class="header_description">
-          search for nearby treatment centers
-        </h2>
-      </div>
-    </header>
-    <main class="main">
-      <section class="handbook">
-        <div class="handbook_box ui-box">
-          <div class="handbook_cards">
-            <div v-if="!recipesData" style="text-align: center">
-              Recipes is not found!
-            </div>
-            <recipe-card
-              v-for="item in recipesData"
-              :key="item.id"
 
-              :data="item"
-            ></recipe-card>
-          </div>
-          <div class="handbook_sidebar">
-            <div class="handbook_search search ui-card">
-              <h2 class="search_title">
-                search
-              </h2>
-              <input
-                type="text"
-                class="search_input"
-                placeholder="pasta"
-                v-model="filters.query.value"
-              >
-              <button
-                class="search_button button"
-                @click="searchRecipes()"
-              >
-                Search
-              </button>
-            </div>
-
-            <div class="handbook_filters filters ui-card">
-              <button
-                class="filters_more more-button button"
-                @click="isShowFilters = !isShowFilters"
-              >
-                <div class="filters_icon more-button_icon">
-                  <img src="./src/icons/settings.svg" alt="filters">
-                </div>
-                filter
-                <div :class="['more-button_arrow', { 'more-button_arrow-open': isShowFilters }]">
-                  <img src="./src/icons/arrow.svg" alt="arrow">
-                </div>
-              </button>
-              <template v-if="isShowFilters">
-                <v-select
-                  class="handbook_filter"
-                  v-model="filters.cuisine.value"
-                  :items="filters.cuisine.options"
-                  label="Cuisine"
-                  attach
-                  chips
-                  multiple
-                  color="#42A5F5"
-                ></v-select>
-                <v-select
-                  class="handbook_filter"
-                  v-model="filters.excludeCuisine.value"
-                  :items="filters.excludeCuisine.options"
-                  label="Exclude cuisine"
-                  attach
-                  chips
-                  multiple
-                  color="#42A5F5"
-                ></v-select>
-                <v-select
-                  class="handbook_filter"
-                  v-model="filters.diet.value"
-                  :items="filters.diet.options"
-                  label="Diet"
-                  attach
-                  chips
-                  multiple
-                  color="#42A5F5"
-                ></v-select>
-                <v-select
-                  class="handbook_filter"
-                  v-model="filters.intolerances.value"
-                  :items="filters.intolerances.options"
-                  label="Intolerances"
-                  attach
-                  chips
-                  multiple
-                  color="#42A5F5"
-                ></v-select>
-              </template>
-            </div>
-          </div>
-        </div>
-      </section>
-    </main>
-  </div>
   <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
   <script src="src/scripts/axios.js"></script>
+
+  <script src="src/components/recipe-card.js"></script>
   <script src="src/scripts/scripts.js"></script>
 </body>
 </html>
